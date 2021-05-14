@@ -6,36 +6,28 @@ import FormControl from "@material-ui/core/FormControl";
 import Alert from "@material-ui/lab/Alert";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
 
 const LoginWrapper = styled.div`
   background: rgba(74, 73, 73, 0.399);
   color: rgb(255, 251, 251);
-  padding: 30px 70px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  padding: 50px 70px;
   text-align: center;
   width: 100%;
   box-sizing: border-box;
   border-radius: 12px;
-  justify-content: space-evenly;
 `;
 
 const EmailWrapper = styled(FormControl)`
-  width: 30vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  /* @media (max-width: 930px) {
-    width: 250px;
-  } */
 `;
 
 const PasswordWrapper = styled(FormControl)`
-  width: 30vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  padding-top: 50px;
 `;
 
 const Title = styled.h2`
@@ -43,18 +35,51 @@ const Title = styled.h2`
   font-size: 33px;
 `;
 
+const FormField = styled.form`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+`;
+
 const Field = styled(TextField)`
   width: 100%;
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+  width: 100%;
+  color: #fff;
 `;
 
 const ButtonStyled = styled(Button)`
+  height: 50px;
+  color: #fff;
   width: 100%;
-  height: 45px;
-  color: #ddd;
+  padding: 20px 0;
+`;
+
+const LabelInput = styled.label`
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+`;
+
+const ForgotPass = styled.div`
+  padding: 10px;
+  text-align: right;
+`;
+
+const NewAccount = styled.div`
+  margin-top: 10px;
+  font-size: 15px;
+  &:hover {
+    opacity: 50%;
+  }
 `;
 
 const Login = () => {
@@ -84,19 +109,21 @@ const Login = () => {
     <LoginWrapper>
       <Title>Log In</Title>
       {error && <Alert severity="warning">{error}</Alert>}
-      <form onSubmit={handleSubmit}>
-        <EmailWrapper id="email">
+      <FormField onSubmit={handleSubmit} autoComplete="off">
+        <EmailWrapper>
+          <LabelInput>Email</LabelInput>
           <Field
-            autoComplete="off"
+            variant="outlined"
             label="Email"
             type="email"
             inputRef={emailRef}
             required
           />
         </EmailWrapper>
-        <PasswordWrapper id="password">
+        <PasswordWrapper>
+          <LabelInput>Password</LabelInput>
           <Field
-            autoComplete="off"
+            variant="outlined"
             label="Password"
             type="password"
             inputRef={passwordRef}
@@ -108,13 +135,15 @@ const Login = () => {
             Log In
           </ButtonStyled>
         </ButtonWrapper>
-      </form>
-      <div>
+      </FormField>
+      <ForgotPass>
         <Link to="/forgot-password">Forgot Password?</Link>
-      </div>
-      <div>
-        Need an account? <Link to="/signup">Sign Up</Link>
-      </div>
+      </ForgotPass>
+      <NewAccount>
+        <Link to="/signup" style={{ color: "#fff" }}>
+          Create an account
+        </Link>
+      </NewAccount>
     </LoginWrapper>
   );
 };
