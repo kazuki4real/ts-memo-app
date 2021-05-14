@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, ReactNode } from 'react'
 import { auth } from '../firebase'
 import firebase from 'firebase/app'
 
@@ -8,9 +8,13 @@ export const useAuth = () => {
   return useContext(AuthContext)
 }
 
-export const AuthProvider: React.FC = ({ children }) => {
+type AuthProps = {
+  children?: React.ReactNode
+}
+
+export const AuthProvider: React.FC<AuthProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const signup = (
     email: string,
@@ -26,11 +30,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     return auth.signInWithEmailAndPassword(email, password)
   }
 
-  const logout = () => {
+  const logout = (): Promise<void> => {
     return auth.signOut()
   }
 
-  const resetPassword = (email: string) => {
+  const resetPassword = (email: string): Promise<void> => {
     return auth.sendPasswordResetEmail(email)
   }
 

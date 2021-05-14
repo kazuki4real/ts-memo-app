@@ -13,7 +13,7 @@ const Paper = styled.div`
   width: 70%;
 `
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Paper>
       <Router>

@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-// interface IProps {
-//   component: any
-//   // any other props that come into the component
-// }
+interface Props {
+  exact: boolean
+  path: string
+  component: any
+}
 
-const PrivateRoute = ({ component: Dashboard, ...rest }: any) => {
+const PrivateRoute = ({ component: Dashboard, ...rest }: Props) => {
   console.log({ ...rest, Dashboard })
 
   const { currentUser } = useAuth()

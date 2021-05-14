@@ -85,7 +85,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
-  const handleSubmit = async (e: any) => {
+  async function handleSubmit(e: React.SyntheticEvent): Promise<void> {
     e.preventDefault()
 
     if (passwordRef?.current?.value !== passwordConfirmRef?.current?.value) {

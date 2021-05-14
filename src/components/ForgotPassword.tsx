@@ -71,7 +71,7 @@ const BackToLogin = styled.div`
 `
 
 const ForgotPassword = () => {
-  const emailRef = useRef<HTMLInputElement>()
+  const emailRef = useRef<HTMLInputElement | undefined>()
   const { resetPassword } = useAuth()
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
