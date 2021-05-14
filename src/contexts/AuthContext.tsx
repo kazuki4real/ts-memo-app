@@ -1,40 +1,47 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
+import React, { useContext, useState, useEffect } from 'react'
+import { auth } from '../firebase'
+import firebase from 'firebase/app'
 
-const AuthContext = React.createContext();
+const AuthContext = React.createContext<any>(null)
 
-export function useAuth() {
-  return useContext(AuthContext);
+export const useAuth = () => {
+  return useContext(AuthContext)
 }
 
-export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
-  const [loading, setLoading] = useState(true);
+export const AuthProvider: React.FC = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
+  const signup = (
+    email: string,
+    password: string,
+  ): Promise<firebase.auth.UserCredential> => {
+    return auth.createUserWithEmailAndPassword(email, password)
   }
 
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password);
+  const login = (
+    email: string,
+    password: string,
+  ): Promise<firebase.auth.UserCredential> => {
+    return auth.signInWithEmailAndPassword(email, password)
   }
 
-  function logout() {
-    return auth.signOut();
+  const logout = () => {
+    return auth.signOut()
   }
 
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email);
+  const resetPassword = (email: string) => {
+    return auth.sendPasswordResetEmail(email)
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
+      setCurrentUser(user)
+      setLoading(false)
+    })
 
-    return unsubscribe;
-  }, []);
+    return unsubscribe
+  }, [])
 
   const value = {
     currentUser,
@@ -42,11 +49,11 @@ export function AuthProvider({ children }) {
     signup,
     logout,
     resetPassword,
-  };
+  }
 
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
     </AuthContext.Provider>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import FormControl from "@material-ui/core/FormControl";
-import Alert from "@material-ui/lab/Alert";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import React, { useRef, useState } from 'react'
+import { useAuth } from '../contexts/AuthContext'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import FormControl from '@material-ui/core/FormControl'
+import Alert from '@material-ui/lab/Alert'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 const Wrapper = styled.div`
   background: rgba(74, 73, 73, 0.399);
@@ -15,18 +15,18 @@ const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   border-radius: 12px;
-`;
+`
 
 const EmailWrapper = styled(FormControl)`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const Title = styled.h2`
   margin-top: 0;
   font-size: 33px;
-`;
+`
 
 const FormField = styled.form`
   display: flex;
@@ -34,11 +34,11 @@ const FormField = styled.form`
   flex-direction: column;
   flex-wrap: nowrap;
   width: 100%;
-`;
+`
 
 const Field = styled(TextField)`
   width: 100%;
-`;
+`
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -47,20 +47,20 @@ const ButtonWrapper = styled.div`
   margin-top: 50px;
   width: 100%;
   color: #fff;
-`;
+`
 
 const ButtonStyled = styled(Button)`
   height: 50px;
   color: #fff;
   width: 100%;
   padding: 20px 0;
-`;
+`
 
 const LabelInput = styled.label`
   font-size: 20px;
   margin-top: 30px;
   margin-bottom: 30px;
-`;
+`
 
 const BackToLogin = styled.div`
   margin-top: 10px;
@@ -68,29 +68,29 @@ const BackToLogin = styled.div`
   &:hover {
     opacity: 50%;
   }
-`;
+`
 
-export default function ForgotPassword() {
-  const emailRef = useRef();
-  const { resetPassword } = useAuth();
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+const ForgotPassword = () => {
+  const emailRef = useRef<HTMLInputElement>()
+  const { resetPassword } = useAuth()
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
 
     try {
-      setMessage("");
-      setError("");
-      setLoading(true);
-      await resetPassword(emailRef.current.value);
-      setMessage("Check your inbox for further instructions");
+      setMessage('')
+      setError('')
+      setLoading(true)
+      await resetPassword(emailRef?.current?.value)
+      setMessage('Check your inbox for further instructions')
     } catch {
-      setError("Failed to reset password");
+      setError('Failed to reset password')
     }
 
-    setLoading(false);
+    setLoading(false)
   }
 
   return (
@@ -120,5 +120,7 @@ export default function ForgotPassword() {
         </BackToLogin>
       </Wrapper>
     </>
-  );
+  )
 }
+
+export default ForgotPassword

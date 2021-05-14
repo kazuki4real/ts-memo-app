@@ -9,12 +9,11 @@ import ForgotPassword from './ForgotPassword'
 import styled from 'styled-components'
 
 const Paper = styled.div`
-  margin-top: 100px;
-  width: 100%;
-  padding: 0 50px;
+  margin: 100px 0 0;
+  width: 70%;
 `
 
-function App() {
+const App = () => {
   return (
     <Paper>
       <Router>
