@@ -1,18 +1,18 @@
-import React from "react";
-import Signup from "./Signup";
-import { AuthProvider } from "../contexts/AuthContext";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import Login from "./Login";
-import PrivateRoute from "./PrivateRoute";
-import ForgotPassword from "./ForgotPassword";
-import styled from "styled-components";
+import React from 'react'
+import Signup from './Signup'
+import { AuthProvider } from '../contexts/AuthContext'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Dashboard from './Dashboard'
+import Login from './Login'
+import PrivateRoute from './PrivateRoute'
+import ForgotPassword from './ForgotPassword'
+import styled from 'styled-components'
 
 const Paper = styled.div`
   margin-top: 100px;
   width: 100%;
   padding: 0 50px;
-`;
+`
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
         </AuthProvider>
       </Router>
     </Paper>
-  );
+  )
 }
 
-export default App;
+export default App
