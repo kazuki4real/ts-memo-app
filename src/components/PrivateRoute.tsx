@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PrivateRoute = ({ component: Dashboard, ...rest }: Props) => {
-  console.log({ ...rest, Dashboard })
+  // console.log({ ...rest, Dashboard })
 
   const { currentUser } = useAuth()
 
