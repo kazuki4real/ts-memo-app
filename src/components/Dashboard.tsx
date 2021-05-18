@@ -13,6 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import TextField from '@material-ui/core/TextField'
 import AddToPhotosSharpIcon from '@material-ui/icons/AddToPhotosSharp'
+import PermIdentityIcon from '@material-ui/icons/PermIdentity'
 
 const ErrorTitle = styled.div`
   cursor: pointer;
@@ -24,9 +25,10 @@ const ErrorTitle = styled.div`
 `
 
 const UserEmail = styled.span`
+  display: flex;
+
   font-size: 35px;
   color: #3f51b5;
-  text-decoration: underline;
 `
 
 const EmptyError = styled.p`
@@ -36,6 +38,7 @@ const EmptyError = styled.p`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: Georgia, serif;
 `
 
 const Header = styled.div`
@@ -63,13 +66,26 @@ const BtnWrapper = styled.div`
 const SubmitBtn = styled(Button)`
   width: 15%;
 `
-// const Image = styled.img`
-//   width: 50%;
-//   height: auto;
-// `
+
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+const Image = styled.img`
+  width: 25%;
+  height: auto;
+`
+
+const Number = styled.p`
+  margin: 0;
+  font-size: 25px;
+  color: #3f51b5;
+`
 
 const Ul = styled.ul`
   padding-left: 0;
+  margin-top: 0;
 `
 
 const EachList = styled.li`
@@ -91,10 +107,17 @@ const UrlP = styled.p`
 const Title = styled.p`
   margin-top: 0;
   text-decoration: underline;
+  color: #3f51b5;
 `
 
 const LogoutBtn = styled(Button)`
   font-size: 60px;
+`
+
+const DateWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  color: #3f51b5;
 `
 
 interface Pass {
@@ -107,6 +130,7 @@ const Dashboard: React.FC = () => {
   const [empty, setEmpty] = useState('')
   const [nonUrl, setNonUrl] = useState('')
   const [datas, setData] = useState([])
+  const [newDatas, setNewDatas] = useState({})
   const [passedData, setPassedData] = useState<Pass>({ id: '', errorTitle: '' })
   const [open, setOpen] = React.useState(false)
   const [openModal, setOpenModal] = React.useState(false)
@@ -133,8 +157,6 @@ const Dashboard: React.FC = () => {
       })
     return () => unsubscribe()
   }, [])
-
-  console.log(datas)
 
   const handleAdd = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -187,6 +209,8 @@ const Dashboard: React.FC = () => {
   }
 
   const OpenModal = () => {
+    setErrorTitle('')
+    setNonUrl('')
     setOpenModal(true)
   }
 
@@ -205,27 +229,34 @@ const Dashboard: React.FC = () => {
     }
   }
 
+  const toDate = (timestamp: number): string => {
+    const newDate = new Date(timestamp).toString()
+    return newDate.substr(0, 25)
+  }
+
   return (
     <Wrapper>
       {error && <Alert severity="error">{error}</Alert>}
       <Header>
-        <p>
-          Hello, <UserEmail>{currentUser.email}</UserEmail>
-        </p>
+        <UserEmail>
+          <PermIdentityIcon fontSize="large" />
+          {currentUser.email}
+        </UserEmail>
         <AddToPhotosSharpIcon
           onClick={OpenModal}
           fontSize="large"
           color="primary"
           style={{ cursor: 'pointer' }}
         />
-        <h2>
-          <LogoutBtn color="primary" variant="outlined" onClick={handleLogout}>
-            <ExitToAppIcon />
-            Log Out
-          </LogoutBtn>
-        </h2>
+        <LogoutBtn color="primary" variant="outlined" onClick={handleLogout}>
+          <ExitToAppIcon />
+          Log Out
+        </LogoutBtn>
       </Header>
-      {/* <Image src="./image/TodoImage.svg" alt="img" /> */}
+      <ImageWrapper>
+        <Image src="./image/TodoImage.svg" alt="img" />
+      </ImageWrapper>
+      <Number>({datas.length})</Number>
       <Dialog
         open={openModal}
         onClose={closeModal}
@@ -233,8 +264,8 @@ const Dashboard: React.FC = () => {
       >
         <DialogContent>
           <DialogContentText style={{ visibility: 'hidden' }}>
-            To subscribe to this website, please enter your email address here.
-            We will
+            This text means nothing, I just needed to have some space on the
+            input. thx.
           </DialogContentText>
           <Form onSubmit={handleAdd}>
             <FieldWrapper>
@@ -275,6 +306,9 @@ const Dashboard: React.FC = () => {
           </Form>
         </DialogContent>
       </Dialog>
+      {/* <FieldWrapper>
+        <Field label="Serach" value={newDatas} onChange={handleFilter} />
+      </FieldWrapper> */}
       <Ul>
         {datas.map(
           (data: any) =>
@@ -290,6 +324,9 @@ const Dashboard: React.FC = () => {
                 <a href={data.url} target="_blank" rel="noopener">
                   <UrlP>{data.url}</UrlP>
                 </a>
+                <DateWrapper>
+                  <span>{toDate(data.timestamp)}</span>
+                </DateWrapper>
                 <Dialog
                   open={open}
                   onClose={handleClose}

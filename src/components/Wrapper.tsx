@@ -8,10 +8,11 @@ import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom'
 
-const EmailWrapper = styled(FormControl)`
+const EmailWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
 `
 
 const Field = styled(TextField)`
@@ -19,13 +20,7 @@ const Field = styled(TextField)`
   color: #fff;
 `
 
-const LabelInput = styled.label`
-  font-size: 20px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`
-
-const PasswordWrapper = styled(FormControl)`
+const PasswordWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -103,8 +98,7 @@ export const WrapLogin = () => {
         <Alert severity="error">{getFromLogin.error}</Alert>
       )}
       <FormField onSubmit={getFromLogin.handleSubmit}>
-        <EmailWrapper>
-          <LabelInput>Email</LabelInput>
+        <EmailWrapper id="emailWrapper">
           <Field
             color="primary"
             variant="outlined"
@@ -115,7 +109,6 @@ export const WrapLogin = () => {
           />
         </EmailWrapper>
         <PasswordWrapper>
-          <LabelInput>Password</LabelInput>
           <Field
             color="primary"
             variant="outlined"
@@ -161,7 +154,6 @@ export const WrapSignup = () => {
         )}
         <FormField onSubmit={getFromSignup.handleSubmit}>
           <EmailWrapper>
-            <LabelInput>Email</LabelInput>
             <Field
               color="primary"
               variant="outlined"
@@ -172,7 +164,6 @@ export const WrapSignup = () => {
             />
           </EmailWrapper>
           <PasswordWrapper>
-            <LabelInput>Password</LabelInput>
             <Field
               color="primary"
               variant="outlined"
@@ -183,11 +174,10 @@ export const WrapSignup = () => {
             />
           </PasswordWrapper>
           <PasswordWrapper>
-            <LabelInput>Password Confirmation</LabelInput>
             <Field
               color="primary"
               variant="outlined"
-              label="Password"
+              label="Password confirmation"
               type="password"
               inputRef={getFromSignup.passwordConfirmRef}
               required

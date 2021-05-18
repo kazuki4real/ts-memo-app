@@ -8,8 +8,8 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
 const Wrapper = styled.div`
-  background: rgba(74, 73, 73, 0.399);
-  color: rgb(255, 251, 251);
+  background: rgba(255, 255, 255, 0.276);
+  color: #3f51b5;
   padding: 50px 70px;
   text-align: center;
   width: 100%;
@@ -104,13 +104,19 @@ const ForgotPassword = () => {
             <LabelInput>Registered Email</LabelInput>
             <Field
               type="email"
+              label="Email"
               variant="outlined"
               inputRef={emailRef}
               required
             />
           </EmailWrapper>
           <ButtonWrapper>
-            <ButtonStyled variant="contained" disabled={loading} type="submit">
+            <ButtonStyled
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              type="submit"
+            >
               Reset Password
             </ButtonStyled>
           </ButtonWrapper>
