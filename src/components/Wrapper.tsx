@@ -16,6 +16,7 @@ const EmailWrapper = styled(FormControl)`
 
 const Field = styled(TextField)`
   width: 100%;
+  color: #fff;
 `
 
 const LabelInput = styled.label`
@@ -48,8 +49,8 @@ const ButtonStyled = styled(Button)`
 `
 
 const Wrapper = styled.div`
-  background: rgba(74, 73, 73, 0.399);
-  color: rgb(255, 251, 251);
+  background: rgba(255, 255, 255, 0.276);
+  color: #3f51b5;
   padding: 50px 70px;
   text-align: center;
   width: 100%;
@@ -93,18 +94,19 @@ const NewAccount = styled.div`
 
 export const WrapLogin = () => {
   const getFromLogin = useContext(FromLogin)
-  // console.log(getEmail.emailRef)
+  // console.log(getEmail.emailRef
 
   return (
     <Wrapper>
       <Title>Log In</Title>
       {getFromLogin.error && (
-        <Alert severity="warning">{getFromLogin.error}</Alert>
+        <Alert severity="error">{getFromLogin.error}</Alert>
       )}
       <FormField onSubmit={getFromLogin.handleSubmit}>
         <EmailWrapper>
           <LabelInput>Email</LabelInput>
           <Field
+            color="primary"
             variant="outlined"
             label="Email"
             type="email"
@@ -115,6 +117,7 @@ export const WrapLogin = () => {
         <PasswordWrapper>
           <LabelInput>Password</LabelInput>
           <Field
+            color="primary"
             variant="outlined"
             label="Password"
             type="password"
@@ -124,6 +127,7 @@ export const WrapLogin = () => {
         </PasswordWrapper>
         <ButtonWrapper>
           <ButtonStyled
+            color="primary"
             variant="contained"
             disabled={getFromLogin.loading}
             type="submit"
@@ -136,7 +140,7 @@ export const WrapLogin = () => {
         <Link to="/forgot-password">Forgot Password?</Link>
       </ForgotPass>
       <NewAccount>
-        <Link to="/signup" style={{ color: '#fff' }}>
+        <Link to="/signup" style={{ color: '#3f51b5' }}>
           Create an account
         </Link>
       </NewAccount>
@@ -159,6 +163,7 @@ export const WrapSignup = () => {
           <EmailWrapper>
             <LabelInput>Email</LabelInput>
             <Field
+              color="primary"
               variant="outlined"
               label="Email"
               type="email"
@@ -169,6 +174,7 @@ export const WrapSignup = () => {
           <PasswordWrapper>
             <LabelInput>Password</LabelInput>
             <Field
+              color="primary"
               variant="outlined"
               label="Password"
               type="password"
@@ -179,6 +185,7 @@ export const WrapSignup = () => {
           <PasswordWrapper>
             <LabelInput>Password Confirmation</LabelInput>
             <Field
+              color="primary"
               variant="outlined"
               label="Password"
               type="password"
@@ -188,6 +195,7 @@ export const WrapSignup = () => {
           </PasswordWrapper>
           <ButtonWrapper>
             <ButtonStyled
+              color="primary"
               variant="contained"
               disabled={getFromSignup.loading}
               type="submit"
@@ -197,7 +205,7 @@ export const WrapSignup = () => {
           </ButtonWrapper>
         </FormField>
         <Login>
-          <Link to="/login" style={{ color: '#fff' }}>
+          <Link to="/login" style={{ color: '#3f51b5' }}>
             Already have an account?
           </Link>
         </Login>

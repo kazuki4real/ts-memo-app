@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <div>
-      {loading && <LinearProgress />}
+      {loading && <LinearProgress color="primary" />}
       <FromLogin.Provider value={value}>
         <WrapLogin />
       </FromLogin.Provider>
