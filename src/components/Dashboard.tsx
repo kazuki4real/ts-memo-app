@@ -1,145 +1,45 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useHistory } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import { db } from '../firebase'
-import styled from 'styled-components'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import TextField from '@material-ui/core/TextField'
 import AddToPhotosSharpIcon from '@material-ui/icons/AddToPhotosSharp'
 import PermIdentityIcon from '@material-ui/icons/PermIdentity'
-
-const ErrorTitle = styled.div`
-  cursor: pointer;
-  color: #ce1919;
-  &:hover {
-    opacity: 50%;
-    text-decoration: line-through;
-  }
-`
-
-const UserEmail = styled.span`
-  display: flex;
-
-  font-size: 35px;
-  color: #3f51b5;
-`
-
-const EmptyError = styled.p`
-  color: #ff1919;
-`
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-family: Georgia, serif;
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-  font-size: 25px;
-`
-
-const Field = styled(TextField)`
-  display: flex;
-`
-const FieldWrapper = styled.div`
-  margin-bottom: 20px;
-`
-
-const Form = styled.form``
-
-const BtnWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`
-
-const SubmitBtn = styled(Button)`
-  width: 15%;
-`
-
-const ImageWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`
-
-const Image = styled.img`
-  width: 25%;
-  height: auto;
-`
-
-const Number = styled.p`
-  margin: 0;
-  font-size: 25px;
-  color: #3f51b5;
-`
-
-const Ul = styled.ul`
-  padding-left: 0;
-  margin-top: 0;
-`
-
-const EachList = styled.li`
-  font-size: 20px;
-  list-style: none;
-  background: rgba(216, 214, 214, 0.386);
-  border-radius: 10px;
-  padding: 25px;
-  margin: 15px 0;
-`
-
-const UrlP = styled.p`
-  font-size: 20px;
-  &:hover {
-    opacity: 50%;
-  }
-`
-
-const Title = styled.p`
-  margin-top: 0;
-  text-decoration: underline;
-  color: #3f51b5;
-`
-
-const LogoutBtn = styled(Button)`
-  font-size: 60px;
-`
-
-const DateWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  color: #3f51b5;
-`
+import {
+  Wrapper,
+  Header,
+  UserEmail,
+  LogoutBtn,
+  ImageWrapper,
+  Image,
+  Number,
+  EachList,
+  NothingMsg,
+} from './styledComponents'
+import DisplayUl from './DisplayUl'
+import TextFieldDialog from './TextFieldDialog'
 
 interface Pass {
   id: string
   errorTitle: string
 }
 
+export const AuthDisplay = React.createContext<any>(null)
+export const AuthTextField = React.createContext<any>(null)
+
 const Dashboard: React.FC = () => {
   const [error, setError] = useState('')
   const [empty, setEmpty] = useState('')
   const [nonUrl, setNonUrl] = useState('')
   const [datas, setData] = useState([])
-  const [newDatas, setNewDatas] = useState({})
   const [passedData, setPassedData] = useState<Pass>({ id: '', errorTitle: '' })
   const [open, setOpen] = React.useState(false)
   const [openModal, setOpenModal] = React.useState(false)
-  const [errorTitle, setErrorTitle] = useState('')
+  const [errorTitle, setErrorTitle] = useState<string | number>('')
   const [url, setUrl] = useState('')
   const { currentUser, logout } = useAuth()
   const history = useHistory()
-
-  // console.log(passedId.id, passedId.name)
 
   type Unsub = () => void
 
@@ -185,8 +85,9 @@ const Dashboard: React.FC = () => {
     setOpenModal(false)
   }
 
-  const handleDelete = (id: any) => {
-    db.collection('users')
+  const handleDelete = async (id: string): Promise<void> => {
+    await db
+      .collection('users')
       .doc(id)
       .delete()
       .then(() => {
@@ -199,7 +100,7 @@ const Dashboard: React.FC = () => {
     setOpen(false)
   }
 
-  const handleClickOpen = (id: string, errorTitle: any) => {
+  const handleClickOpen = (id: string, errorTitle: string) => {
     setOpen(true)
     setPassedData({ id, errorTitle })
   }
@@ -234,6 +135,34 @@ const Dashboard: React.FC = () => {
     return newDate.substr(0, 25)
   }
 
+  const CurrentUserData = (id: string): number => {
+    const newArray = datas.filter((x: any) => x.userId === id)
+    return newArray.length
+  }
+
+  const value_displayUi = {
+    toDate,
+    handleClose,
+    handleClickOpen,
+    handleDelete,
+    passedData,
+    open,
+    currentUser,
+    datas,
+  }
+
+  const value_textfieldDialog = {
+    closeModal,
+    handleAdd,
+    handleLogout,
+    setErrorTitle,
+    setUrl,
+    empty,
+    nonUrl,
+    url,
+    openModal,
+  }
+
   return (
     <Wrapper>
       {error && <Alert severity="error">{error}</Alert>}
@@ -256,107 +185,18 @@ const Dashboard: React.FC = () => {
       <ImageWrapper>
         <Image src="./image/TodoImage.svg" alt="img" />
       </ImageWrapper>
-      <Number>({datas.length})</Number>
-      <Dialog
-        open={openModal}
-        onClose={closeModal}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogContent>
-          <DialogContentText style={{ visibility: 'hidden' }}>
-            This text means nothing, I just needed to have some space on the
-            input. thx.
-          </DialogContentText>
-          <Form onSubmit={handleAdd}>
-            <FieldWrapper>
-              <Field
-                fullWidth
-                color="primary"
-                id="outlined-basic"
-                label="Error Title"
-                variant="outlined"
-                type="text"
-                value={errorTitle}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setErrorTitle(e.currentTarget.value)
-                }
-              />
-              {empty && <EmptyError>{empty}</EmptyError>}
-            </FieldWrapper>
-            <FieldWrapper>
-              <Field
-                fullWidth
-                color="primary"
-                id="outlined-basic"
-                label="https://..."
-                variant="outlined"
-                type="text"
-                value={url}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setUrl(e.currentTarget.value)
-                }
-              />
-              {nonUrl && <EmptyError>{nonUrl}</EmptyError>}
-            </FieldWrapper>
-            <BtnWrapper>
-              <SubmitBtn variant="contained" type="submit">
-                Add
-              </SubmitBtn>
-            </BtnWrapper>
-          </Form>
-        </DialogContent>
-      </Dialog>
-      {/* <FieldWrapper>
-        <Field label="Serach" value={newDatas} onChange={handleFilter} />
-      </FieldWrapper> */}
-      <Ul>
-        {datas.map(
-          (data: any) =>
-            currentUser.uid === data.userId && (
-              <EachList key={data.id}>
-                <Title>Error Message:</Title>
-                <ErrorTitle
-                  onClick={() => handleClickOpen(data.id, data.errorTitle)}
-                >
-                  <p>{data.errorTitle}</p>
-                </ErrorTitle>
-                <Title>Solution: </Title>
-                <a href={data.url} target="_blank" rel="noopener">
-                  <UrlP>{data.url}</UrlP>
-                </a>
-                <DateWrapper>
-                  <span>{toDate(data.timestamp)}</span>
-                </DateWrapper>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">{'Delete'}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      You are about to delete...
-                    </DialogContentText>
-                    "{passedData.errorTitle}"
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(passedData.id)}
-                      color="primary"
-                      autoFocus
-                    >
-                      OK
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </EachList>
-            ),
-        )}
-      </Ul>
+      <AuthTextField.Provider value={value_textfieldDialog}>
+        <TextFieldDialog />
+      </AuthTextField.Provider>
+      <Number>({CurrentUserData(currentUser.uid)})</Number>
+      {CurrentUserData(currentUser.uid) === 0 && (
+        <EachList>
+          <NothingMsg>Nothing so far. Let's add something!</NothingMsg>
+        </EachList>
+      )}
+      <AuthDisplay.Provider value={value_displayUi}>
+        <DisplayUl />
+      </AuthDisplay.Provider>
     </Wrapper>
   )
 }
