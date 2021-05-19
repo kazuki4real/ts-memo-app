@@ -5,7 +5,7 @@ import Alert from '@material-ui/lab/Alert'
 import { db } from '../firebase'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AddToPhotosSharpIcon from '@material-ui/icons/AddToPhotosSharp'
-import PermIdentityIcon from '@material-ui/icons/PermIdentity'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import {
   Wrapper,
   Header,
@@ -16,6 +16,8 @@ import {
   Number,
   EachList,
   NothingMsg,
+  Btn,
+  BtnWrapper_2,
 } from './styledComponents'
 import DisplayUl from './DisplayUl'
 import TextFieldDialog from './TextFieldDialog'
@@ -31,6 +33,7 @@ export const AuthTextField = React.createContext<any>(null)
 const Dashboard: React.FC = () => {
   const [error, setError] = useState('')
   const [empty, setEmpty] = useState('')
+  const [count, setCount] = useState<number>(5)
   const [nonUrl, setNonUrl] = useState('')
   const [datas, setData] = useState([])
   const [passedData, setPassedData] = useState<Pass>({ id: '', errorTitle: '' })
@@ -47,7 +50,7 @@ const Dashboard: React.FC = () => {
     const unsubscribe: Unsub = db
       .collection('users')
       .orderBy('timestamp', 'desc')
-      // .limit(10)
+      .limit(count)
       .onSnapshot((snapshot: any) => {
         const dataSet = snapshot.docs.map((doc: any) => ({
           id: doc.id,
@@ -56,7 +59,7 @@ const Dashboard: React.FC = () => {
         setData(dataSet)
       })
     return () => unsubscribe()
-  }, [])
+  }, [count])
 
   const handleAdd = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -80,6 +83,7 @@ const Dashboard: React.FC = () => {
         timestamp: Date.now(),
         userId: currentUser.uid,
       })
+
     setErrorTitle('')
     setUrl('')
     setOpenModal(false)
@@ -99,6 +103,25 @@ const Dashboard: React.FC = () => {
 
     setOpen(false)
   }
+
+  const handleDeleteAll = (): void => {
+    setCount(1000)
+    datas.map((data: any) => {
+      if (data.userId === currentUser.uid) {
+        db.collection('users')
+          .doc(data.id)
+          .delete()
+          .then(() => {
+            console.log('success')
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    })
+  }
+
+  console.log(datas)
 
   const handleClickOpen = (id: string, errorTitle: string) => {
     setOpen(true)
@@ -168,7 +191,7 @@ const Dashboard: React.FC = () => {
       {error && <Alert severity="error">{error}</Alert>}
       <Header>
         <UserEmail>
-          <PermIdentityIcon fontSize="large" />
+          <AccountCircleIcon fontSize="large" />
           {currentUser.email}
         </UserEmail>
         <AddToPhotosSharpIcon
@@ -179,7 +202,7 @@ const Dashboard: React.FC = () => {
         />
         <LogoutBtn color="primary" variant="outlined" onClick={handleLogout}>
           <ExitToAppIcon />
-          Log Out
+          ログアウト
         </LogoutBtn>
       </Header>
       <ImageWrapper>
@@ -188,11 +211,31 @@ const Dashboard: React.FC = () => {
       <AuthTextField.Provider value={value_textfieldDialog}>
         <TextFieldDialog />
       </AuthTextField.Provider>
-      <Number>({CurrentUserData(currentUser.uid)})</Number>
-      {CurrentUserData(currentUser.uid) === 0 && (
+      <Number>表示件数:({CurrentUserData(currentUser.uid)})</Number>
+      {CurrentUserData(currentUser.uid) === 0 ? (
         <EachList>
-          <NothingMsg>Nothing so far. Let's add something!</NothingMsg>
+          <NothingMsg>
+            メモはありません。追加しておきたいエラーをメモしよう！
+          </NothingMsg>
         </EachList>
+      ) : (
+        <Btn variant="outlined" color="primary" onClick={handleDeleteAll}>
+          表示中のメモ{CurrentUserData(currentUser.uid)}件をすべて削除
+        </Btn>
+      )}
+      {CurrentUserData(currentUser.uid) >= 5 && (
+        <BtnWrapper_2>
+          <Btn
+            variant="outlined"
+            color="primary"
+            onClick={() => setCount(count + 5)}
+          >
+            {'すべてのメモを表示'}
+          </Btn>
+          <Btn variant="outlined" color="primary" onClick={() => setCount(5)}>
+            {'上位５件を表示'}
+          </Btn>
+        </BtnWrapper_2>
       )}
       <AuthDisplay.Provider value={value_displayUi}>
         <DisplayUl />

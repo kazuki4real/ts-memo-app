@@ -23,7 +23,7 @@ const DisplayUl = () => {
         (data: any) =>
           getAuthDisplay.currentUser.uid === data.userId && (
             <EachList key={data.id}>
-              <Title>・Error Message:</Title>
+              <Title>・エラーメッセージ:</Title>
               <ErrorTitle
                 onClick={() =>
                   getAuthDisplay.handleClickOpen(data.id, data.errorTitle)
@@ -31,7 +31,7 @@ const DisplayUl = () => {
               >
                 <p>{data.errorTitle}</p>
               </ErrorTitle>
-              <Title>・Solution: </Title>
+              <Title>・参考記事: </Title>
               <a href={data.url} target="_blank" rel="noopener">
                 <UrlP>{data.url}</UrlP>
               </a>

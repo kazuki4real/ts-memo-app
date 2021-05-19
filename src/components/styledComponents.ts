@@ -36,6 +36,11 @@ export const Header = styled.div`
   font-size: 25px;
 `
 
+export const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
 export const Field = styled(TextField)`
   display: flex;
 `
@@ -43,11 +48,15 @@ export const FieldWrapper = styled.div`
   margin-bottom: 20px;
 `
 
+export const Btn = styled(Button)`
+  width: 100%;
+`
+
 export const Form = styled.form``
 
-export const BtnWrapper = styled.div`
+export const BtnWrapper_2 = styled.div`
   display: flex;
-  justify-content: flex-end;
+  width: 100%;
 `
 
 export const SubmitBtn = styled(Button)`
@@ -68,6 +77,7 @@ export const Number = styled.p`
   margin: 0;
   font-size: 25px;
   color: #3f51b5;
+  padding-bottom: 10px;
 `
 
 export const Ul = styled.ul`
