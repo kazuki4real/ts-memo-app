@@ -21,16 +21,23 @@ const TextFieldDialog = () => {
       onClose={getAuthTextField.closeModal}
       aria-labelledby="form-dialog-title"
     >
-      <DialogContent>
-        <DialogContentText style={{ visibility: 'hidden' }}>
-          This text means nothing, I just needed to have some space on the
-          input. thx.
-        </DialogContentText>
+      <DialogContent style={{ paddingBottom: '20px' }}>
+        {window.innerWidth > 1025 ? (
+          <DialogContentText style={{ visibility: 'hidden' }}>
+            This text means nothing, I just needed to have some space on the
+            input. thx.
+          </DialogContentText>
+        ) : (
+          <DialogContentText style={{ visibility: 'hidden' }}>
+            This text means nothing, I just needed to have some
+          </DialogContentText>
+        )}
+
         <Form onSubmit={getAuthTextField.handleAdd}>
           <FieldWrapper>
             <Field
               fullWidth
-              color="primary"
+              /*color="primary"*/
               id="outlined-basic"
               label="Error Title"
               variant="outlined"
@@ -47,7 +54,7 @@ const TextFieldDialog = () => {
           <FieldWrapper>
             <Field
               fullWidth
-              color="primary"
+              /*color="primary"*/
               id="outlined-basic"
               label="https://..."
               variant="outlined"

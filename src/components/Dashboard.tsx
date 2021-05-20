@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useHistory } from 'react-router-dom'
 import Alert from '@material-ui/lab/Alert'
-import { db } from '../firebase'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AddToPhotosSharpIcon from '@material-ui/icons/AddToPhotosSharp'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { db } from '../firebase'
+import Button from '@material-ui/core/Button'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import {
   Wrapper,
   Header,
@@ -21,11 +22,11 @@ import {
 } from './styledComponents'
 import DisplayUl from './DisplayUl'
 import TextFieldDialog from './TextFieldDialog'
-
-interface Pass {
-  id: string
-  errorTitle: string
-}
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 export const AuthDisplay = React.createContext<any>(null)
 export const AuthTextField = React.createContext<any>(null)
@@ -36,7 +37,6 @@ const Dashboard: React.FC = () => {
   const [count, setCount] = useState<number>(5)
   const [nonUrl, setNonUrl] = useState('')
   const [datas, setData] = useState([])
-  const [passedData, setPassedData] = useState<Pass>({ id: '', errorTitle: '' })
   const [open, setOpen] = React.useState(false)
   const [openModal, setOpenModal] = React.useState(false)
   const [errorTitle, setErrorTitle] = useState<string | number>('')
@@ -100,7 +100,6 @@ const Dashboard: React.FC = () => {
       .catch((err) => {
         console.log(err)
       })
-
     setOpen(false)
   }
 
@@ -119,13 +118,11 @@ const Dashboard: React.FC = () => {
           })
       }
     })
+    setOpen(false)
   }
 
-  console.log(datas)
-
-  const handleClickOpen = (id: string, errorTitle: string) => {
+  const handleClickOpen = () => {
     setOpen(true)
-    setPassedData({ id, errorTitle })
   }
 
   const handleClose = () => {
@@ -135,6 +132,8 @@ const Dashboard: React.FC = () => {
   const OpenModal = () => {
     setErrorTitle('')
     setNonUrl('')
+    setEmpty('')
+    setUrl('')
     setOpenModal(true)
   }
 
@@ -165,11 +164,7 @@ const Dashboard: React.FC = () => {
 
   const value_displayUi = {
     toDate,
-    handleClose,
-    handleClickOpen,
     handleDelete,
-    passedData,
-    open,
     currentUser,
     datas,
   }
@@ -187,9 +182,13 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <Wrapper>
-      {error && <Alert severity="error">{error}</Alert>}
-      <Header>
+    <Wrapper id="wrapper">
+      {error && (
+        <Alert severity="error" style={{ backgroundColor: '#fff' }}>
+          {error}
+        </Alert>
+      )}
+      <Header id="header">
         <UserEmail>
           <AccountCircleIcon fontSize="large" />
           {currentUser.email}
@@ -197,17 +196,22 @@ const Dashboard: React.FC = () => {
         <AddToPhotosSharpIcon
           onClick={OpenModal}
           fontSize="large"
-          color="primary"
+          // color="primary"
           style={{ cursor: 'pointer' }}
         />
-        <LogoutBtn color="primary" variant="outlined" onClick={handleLogout}>
+        <LogoutBtn
+          /*color="primary"*/ variant="outlined"
+          onClick={handleLogout}
+        >
           <ExitToAppIcon />
           ログアウト
         </LogoutBtn>
       </Header>
-      <ImageWrapper>
-        <Image src="./image/TodoImage.svg" alt="img" />
-      </ImageWrapper>
+      {window.innerWidth > 1025 && (
+        <ImageWrapper>
+          <Image src="./image/TodoImage.svg" alt="img" />
+        </ImageWrapper>
+      )}
       <AuthTextField.Provider value={value_textfieldDialog}>
         <TextFieldDialog />
       </AuthTextField.Provider>
@@ -219,20 +223,45 @@ const Dashboard: React.FC = () => {
           </NothingMsg>
         </EachList>
       ) : (
-        <Btn variant="outlined" color="primary" onClick={handleDeleteAll}>
+        <Btn variant="outlined" /*color="primary"*/ onClick={handleClickOpen}>
           表示中のメモ{CurrentUserData(currentUser.uid)}件をすべて削除
         </Btn>
       )}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete ({CurrentUserData(currentUser.uid)})
+            memos?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDeleteAll} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
       {CurrentUserData(currentUser.uid) >= 5 && (
         <BtnWrapper_2>
           <Btn
             variant="outlined"
-            color="primary"
+            // color="primary"
             onClick={() => setCount(count + 5)}
           >
             {'すべてのメモを表示'}
           </Btn>
-          <Btn variant="outlined" color="primary" onClick={() => setCount(5)}>
+          <Btn
+            variant="outlined"
+            /*color="primary"*/ onClick={() => setCount(5)}
+          >
             {'上位５件を表示'}
           </Btn>
         </BtnWrapper_2>

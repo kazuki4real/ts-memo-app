@@ -1,106 +1,41 @@
 import React, { useContext } from 'react'
 import { FromLogin } from './Login'
 import { FromSignup } from './Signup'
-import styled from 'styled-components'
-import TextField from '@material-ui/core/TextField'
-import FormControl from '@material-ui/core/FormControl'
-import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import { Link } from 'react-router-dom'
-
-const EmailWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-`
-
-const Field = styled(TextField)`
-  width: 100%;
-  color: #fff;
-`
-
-const PasswordWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-`
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 50px;
-  width: 100%;
-  color: #fff;
-`
-
-const ButtonStyled = styled(Button)`
-  height: 50px;
-  color: #fff;
-  width: 100%;
-  padding: 20px 0;
-`
-
-const Wrapper = styled.div`
-  background: rgba(255, 255, 255, 0.276);
-  color: #3f51b5;
-  padding: 50px 70px;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 12px;
-`
-
-const Title = styled.h2`
-  margin-top: 0;
-  font-size: 33px;
-`
-
-const FormField = styled.form`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  width: 100%;
-`
-
-const Login = styled.div`
-  margin-top: 10px;
-  font-size: 15px;
-  &:hover {
-    opacity: 50%;
-  }
-`
-
-const ForgotPass = styled.div`
-  padding: 10px;
-  text-align: right;
-`
-
-const NewAccount = styled.div`
-  margin-top: 10px;
-  font-size: 15px;
-  &:hover {
-    opacity: 50%;
-  }
-`
+import {
+  EmailWrapper,
+  FieldWrapper2,
+  PasswordWrapper,
+  ButtonWrapper,
+  ButtonStyled,
+  WrapperWrapper2,
+  TitleWrapper2,
+  FormField,
+  Login,
+  ForgotPass,
+  NewAccount,
+} from './styledComponents'
 
 export const WrapLogin = () => {
   const getFromLogin = useContext(FromLogin)
   // console.log(getEmail.emailRef
 
   return (
-    <Wrapper>
-      <Title>Log In</Title>
+    <WrapperWrapper2 id="asas">
+      <TitleWrapper2>Log In</TitleWrapper2>
       {getFromLogin.error && (
-        <Alert severity="error">{getFromLogin.error}</Alert>
+        <Alert
+          severity="error"
+          style={{ color: '#f42929', backgroundColor: '#fff' }}
+        >
+          {getFromLogin.error}
+        </Alert>
       )}
       <FormField onSubmit={getFromLogin.handleSubmit}>
         <EmailWrapper id="emailWrapper">
-          <Field
-            color="primary"
+          <FieldWrapper2
+            /*color="primary"*/
             variant="outlined"
             label="Email"
             type="email"
@@ -109,8 +44,8 @@ export const WrapLogin = () => {
           />
         </EmailWrapper>
         <PasswordWrapper>
-          <Field
-            color="primary"
+          <FieldWrapper2
+            /*color="primary"*/
             variant="outlined"
             label="Password"
             type="password"
@@ -120,7 +55,7 @@ export const WrapLogin = () => {
         </PasswordWrapper>
         <ButtonWrapper>
           <ButtonStyled
-            color="primary"
+            // color="primary"
             variant="contained"
             disabled={getFromLogin.loading}
             type="submit"
@@ -130,14 +65,16 @@ export const WrapLogin = () => {
         </ButtonWrapper>
       </FormField>
       <ForgotPass>
-        <Link to="/forgot-password">Forgot Password?</Link>
+        <Link style={{ color: '#266798' }} to="/forgot-password">
+          Forgot Password?
+        </Link>
       </ForgotPass>
       <NewAccount>
-        <Link to="/signup" style={{ color: '#3f51b5' }}>
+        <Link to="/signup" style={{ color: '#266798' }}>
           Create an account
         </Link>
       </NewAccount>
-    </Wrapper>
+    </WrapperWrapper2>
   )
 }
 
@@ -147,15 +84,20 @@ export const WrapSignup = () => {
 
   return (
     <>
-      <Wrapper>
-        <Title>Sign Up</Title>
+      <WrapperWrapper2>
+        <TitleWrapper2>Sign Up</TitleWrapper2>
         {getFromSignup.error && (
-          <Alert severity="error">{getFromSignup.error}</Alert>
+          <Alert
+            severity="error"
+            style={{ color: '#f42929', backgroundColor: '#fff' }}
+          >
+            {getFromSignup.error}
+          </Alert>
         )}
         <FormField onSubmit={getFromSignup.handleSubmit}>
           <EmailWrapper>
-            <Field
-              color="primary"
+            <FieldWrapper2
+              /*color="primary"*/
               variant="outlined"
               label="Email"
               type="email"
@@ -164,8 +106,8 @@ export const WrapSignup = () => {
             />
           </EmailWrapper>
           <PasswordWrapper>
-            <Field
-              color="primary"
+            <FieldWrapper2
+              /*color="primary"*/
               variant="outlined"
               label="Password"
               type="password"
@@ -174,8 +116,8 @@ export const WrapSignup = () => {
             />
           </PasswordWrapper>
           <PasswordWrapper>
-            <Field
-              color="primary"
+            <FieldWrapper2
+              /*color="primary"*/
               variant="outlined"
               label="Password confirmation"
               type="password"
@@ -185,7 +127,7 @@ export const WrapSignup = () => {
           </PasswordWrapper>
           <ButtonWrapper>
             <ButtonStyled
-              color="primary"
+              // color="primary"
               variant="contained"
               disabled={getFromSignup.loading}
               type="submit"
@@ -195,11 +137,11 @@ export const WrapSignup = () => {
           </ButtonWrapper>
         </FormField>
         <Login>
-          <Link to="/login" style={{ color: '#3f51b5' }}>
+          <Link to="/login" style={{ color: '#266798' }}>
             Already have an account?
           </Link>
         </Login>
-      </Wrapper>
+      </WrapperWrapper2>
     </>
   )
 }

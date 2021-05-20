@@ -6,15 +6,19 @@ import FormControl from '@material-ui/core/FormControl'
 import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { sp } from './media'
 
 const Wrapper = styled.div`
-  background: rgba(255, 255, 255, 0.276);
-  color: #3f51b5;
+  background: rgba(96, 96, 96, 0.297);
+  /* color: #3f51b5; */
   padding: 50px 70px;
   text-align: center;
   width: 100%;
   box-sizing: border-box;
   border-radius: 12px;
+  ${sp`
+  padding: 30px 25px;
+  `}
 `
 
 const EmailWrapper = styled(FormControl)`
@@ -26,6 +30,9 @@ const EmailWrapper = styled(FormControl)`
 const Title = styled.h2`
   margin-top: 0;
   font-size: 33px;
+  ${sp`
+  font-size: 25px;
+  `}
 `
 
 const FormField = styled.form`
@@ -51,7 +58,7 @@ const ButtonWrapper = styled.div`
 
 const ButtonStyled = styled(Button)`
   height: 50px;
-  color: #fff;
+  /* color: #fff; */
   width: 100%;
   padding: 20px 0;
 `
@@ -97,8 +104,22 @@ const ForgotPassword = () => {
     <>
       <Wrapper>
         <Title>Password Reset</Title>
-        {error && <Alert severity="error">{error}</Alert>}
-        {message && <Alert severity="success">{message}</Alert>}
+        {error && (
+          <Alert
+            severity="error"
+            style={{ color: '#f42929', backgroundColor: '#fff' }}
+          >
+            {error}
+          </Alert>
+        )}
+        {message && (
+          <Alert
+            severity="success"
+            style={{ color: '#00a930', backgroundColor: '#fff' }}
+          >
+            {message}
+          </Alert>
+        )}
         <FormField onSubmit={handleSubmit}>
           <EmailWrapper id="email">
             <LabelInput>Registered Email</LabelInput>
@@ -113,7 +134,7 @@ const ForgotPassword = () => {
           <ButtonWrapper>
             <ButtonStyled
               variant="contained"
-              color="primary"
+              // color="primary"
               disabled={loading}
               type="submit"
             >
@@ -122,7 +143,9 @@ const ForgotPassword = () => {
           </ButtonWrapper>
         </FormField>
         <BackToLogin>
-          <Link to="/login">back to Login</Link>
+          <Link style={{ color: '#266798' }} to="/login">
+            back to Login
+          </Link>
         </BackToLogin>
       </Wrapper>
     </>

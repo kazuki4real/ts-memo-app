@@ -41,12 +41,6 @@ export const AuthProvider: React.FC<AuthProps> = ({ children }) => {
   useEffect(() => {
     const unsubscribe: firebase.Unsubscribe = auth.onAuthStateChanged(
       (user) => {
-        // if (!user) {
-        //   firebase.auth().signInAnonymously()
-        // } else {
-        // console.log(user)
-
-        // }
         setCurrentUser(user)
         setLoading(false)
       },

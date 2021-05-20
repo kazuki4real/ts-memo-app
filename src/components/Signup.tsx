@@ -45,7 +45,7 @@ const Signup = () => {
 
   return (
     <div>
-      {loading && <LinearProgress color="primary" />}
+      {loading && <LinearProgress /*color="primary"*/ />}
       <FromSignup.Provider value={value}>
         <WrapSignup />
       </FromSignup.Provider>

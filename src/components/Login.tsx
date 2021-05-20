@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react'
+import React, { useRef, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useHistory } from 'react-router-dom'
 import { WrapLogin } from './Wrapper'
@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <div>
-      {loading && <LinearProgress color="primary" />}
+      {loading && <LinearProgress /*color="primary"*/ />}
       <FromLogin.Provider value={value}>
         <WrapLogin />
       </FromLogin.Provider>
