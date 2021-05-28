@@ -89,11 +89,15 @@ export const Number = styled.p`
   font-size: 25px;
   /* color: #3f51b5; */
   padding-bottom: 10px;
+  margin-top: 15px;
 `
 
 export const Ul = styled.ul`
   padding-left: 0;
   margin-top: 0;
+  ${sp`
+  width: 100%;
+  `}
 `
 
 export const EachList = styled.li`
@@ -103,10 +107,14 @@ export const EachList = styled.li`
   border-radius: 10px;
   padding: 25px;
   margin: 15px 0;
+  ${sp`
+  width: 100%;
+  `}
 `
 
 export const UrlP = styled.p`
   font-size: 20px;
+  word-break: break-all;
   &:hover {
     opacity: 50%;
   }
@@ -176,6 +184,7 @@ export const WrapperWrapper2 = styled.div`
   border-radius: 12px;
   ${sp`
   padding: 30px 25px;
+  background: rgba(195, 209, 213, 0.303);
   `}
 `
 

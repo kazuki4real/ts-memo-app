@@ -16,7 +16,7 @@ const DisplayUl = () => {
       {getAuthDisplay.datas.map(
         (data: any) =>
           getAuthDisplay.currentUser.uid === data.userId && (
-            <EachList key={data.id}>
+            <EachList key={data.id} id="eachlist">
               <Title>・エラーメッセージ:</Title>
               <ErrorTitle onClick={() => getAuthDisplay.handleDelete(data.id)}>
                 <p>{data.errorTitle}</p>

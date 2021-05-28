@@ -35,9 +35,10 @@ export const WrapLogin = () => {
       <FormField onSubmit={getFromLogin.handleSubmit}>
         <EmailWrapper id="emailWrapper">
           <FieldWrapper2
-            /*color="primary"*/
+            color="primary"
             variant="outlined"
-            label="Email"
+            label="test@gmail.comで匿名ログイン"
+            defaultValue="test@gmail.com"
             type="email"
             inputRef={getFromLogin.emailRef}
             required
@@ -45,32 +46,42 @@ export const WrapLogin = () => {
         </EmailWrapper>
         <PasswordWrapper>
           <FieldWrapper2
-            /*color="primary"*/
+            color="primary"
             variant="outlined"
-            label="Password"
+            label="passwordと入力して匿名ログイン"
             type="password"
             inputRef={getFromLogin.passwordRef}
             required
           />
         </PasswordWrapper>
         <ButtonWrapper>
-          <ButtonStyled
-            // color="primary"
-            variant="contained"
-            disabled={getFromLogin.loading}
-            type="submit"
-          >
-            Log In
-          </ButtonStyled>
+          {window.innerWidth < 500 ? (
+            <ButtonStyled
+              variant="contained"
+              color="primary"
+              disabled={getFromLogin.loading}
+              type="submit"
+            >
+              Log In
+            </ButtonStyled>
+          ) : (
+            <ButtonStyled
+              variant="contained"
+              disabled={getFromLogin.loading}
+              type="submit"
+            >
+              Log In
+            </ButtonStyled>
+          )}
         </ButtonWrapper>
       </FormField>
       <ForgotPass>
-        <Link style={{ color: '#266798' }} to="/forgot-password">
+        <Link style={{ color: '#3f50b5' }} to="/forgot-password">
           Forgot Password?
         </Link>
       </ForgotPass>
       <NewAccount>
-        <Link to="/signup" style={{ color: '#266798' }}>
+        <Link to="/signup" style={{ color: '#3f50b5' }}>
           Create an account
         </Link>
       </NewAccount>
@@ -126,18 +137,28 @@ export const WrapSignup = () => {
             />
           </PasswordWrapper>
           <ButtonWrapper>
-            <ButtonStyled
-              // color="primary"
-              variant="contained"
-              disabled={getFromSignup.loading}
-              type="submit"
-            >
-              Sign Up
-            </ButtonStyled>
+            {window.innerWidth < 500 ? (
+              <ButtonStyled
+                variant="contained"
+                color="primary"
+                disabled={getFromSignup.loading}
+                type="submit"
+              >
+                Sign Up
+              </ButtonStyled>
+            ) : (
+              <ButtonStyled
+                variant="contained"
+                disabled={getFromSignup.loading}
+                type="submit"
+              >
+                Sign Up
+              </ButtonStyled>
+            )}
           </ButtonWrapper>
         </FormField>
         <Login>
-          <Link to="/login" style={{ color: '#266798' }}>
+          <Link to="/login" style={{ color: '#3f50b5' }}>
             Already have an account?
           </Link>
         </Login>

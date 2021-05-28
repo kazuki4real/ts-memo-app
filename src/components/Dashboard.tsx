@@ -233,13 +233,10 @@ const Dashboard: React.FC = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{'Deleting alert'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete ({CurrentUserData(currentUser.uid)})
-            memos?
+            ({CurrentUserData(currentUser.uid)})件すべてのメモを削除しますか？
           </DialogContentText>
         </DialogContent>
         <DialogActions>

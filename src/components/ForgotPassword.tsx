@@ -18,6 +18,7 @@ const Wrapper = styled.div`
   border-radius: 12px;
   ${sp`
   padding: 30px 25px;
+  background: rgba(195, 209, 213, 0.303);
   `}
 `
 
@@ -132,18 +133,28 @@ const ForgotPassword = () => {
             />
           </EmailWrapper>
           <ButtonWrapper>
-            <ButtonStyled
-              variant="contained"
-              // color="primary"
-              disabled={loading}
-              type="submit"
-            >
-              Reset Password
-            </ButtonStyled>
+            {window.innerWidth < 500 ? (
+              <ButtonStyled
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                type="submit"
+              >
+                Reset Password
+              </ButtonStyled>
+            ) : (
+              <ButtonStyled
+                variant="contained"
+                disabled={loading}
+                type="submit"
+              >
+                Reset Password
+              </ButtonStyled>
+            )}
           </ButtonWrapper>
         </FormField>
         <BackToLogin>
-          <Link style={{ color: '#266798' }} to="/login">
+          <Link style={{ color: '#3f50b5' }} to="/login">
             back to Login
           </Link>
         </BackToLogin>
